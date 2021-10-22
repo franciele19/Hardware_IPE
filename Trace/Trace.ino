@@ -1,3 +1,4 @@
+
 /**
  * Created by K. Suwatchai (Mobizt)
  * 
@@ -17,8 +18,8 @@
 #include <ESP8266WiFi.h>
 #endif
 #include <Firebase_ESP_Client.h>
-
-
+#include <pitches.h>
+#include <Tone32.h>
 
 #include <SPI.h>
 #include <MFRC522.h>
@@ -27,13 +28,15 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 
+//Buzzer
+#define buzzer_pin 13 //pinagem do buzzer
 
 //Provide the token generation process info.
 #include <addons/TokenHelper.h>
 
 /* 1. Define the WiFi credentials */
-#define WIFI_SSID "Vitor"
-#define WIFI_PASSWORD "vepn1234"
+#define WIFI_SSID "igorlandia"
+#define WIFI_PASSWORD "meninatriste"
 
 /* 2. Define the API Key */
 #define API_KEY "AIzaSyC-zWLr4sKk6RdJYIfiq5jni8Wp3cfOPrw"
@@ -94,7 +97,6 @@ void setup()
     Firebase.begin(&config, &auth);
     
     Firebase.reconnectWiFi(true);
-
     
 }
 
@@ -120,7 +122,11 @@ void loop()
   if ( ! mfrc522.PICC_ReadCardSerial()) {
     return;
   }
-
+  
+  //Buzzer
+  tone(buzzer_pin,NOTE_G5,200,0);
+  noTone(buzzer_pin,0);
+  
   Serial.println(F("**Card Detected:**"));
 
  mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid)); //dump some details about the card
