@@ -29,7 +29,7 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 
 //Buzzer
-#define buzzer_pin 13 //pinagem do buzzer
+#define buzzer_pin 2 //pinagem do buzzer
 
 //Provide the token generation process info.
 #include <addons/TokenHelper.h>
